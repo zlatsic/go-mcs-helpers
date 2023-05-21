@@ -1,4 +1,4 @@
-package api
+package helpers
 
 import (
 	"encoding/json"
@@ -15,7 +15,7 @@ type jsonResponse struct {
 	data    any    `json:"data,omitempty"`
 }
 
-func (app *Config) readJSON(writer http.ResponseWriter, request *http.Request, data any) error {
+func ReadJSON(writer http.ResponseWriter, request *http.Request, data any) error {
 	request.Body = http.MaxBytesReader(writer, request.Body, int64(MaxBytes))
 
 	dec := json.NewDecoder(request.Body)
@@ -31,7 +31,7 @@ func (app *Config) readJSON(writer http.ResponseWriter, request *http.Request, d
 	return nil
 }
 
-func (app *Config) writeJSON(writer http.ResponseWriter, status int, data any, headers ...http.Header) error {
+func WriteJSON(writer http.ResponseWriter, status int, data any, headers ...http.Header) error {
 	out, err := json.Marshal(data)
 	if err != nil {
 		return err
@@ -53,7 +53,7 @@ func (app *Config) writeJSON(writer http.ResponseWriter, status int, data any, h
 	return nil
 }
 
-func (app *Config) errorJSON(writer http.ResponseWriter, err error, status ...int) error {
+func ErrorJSON(writer http.ResponseWriter, err error, status ...int) error {
 	statusCode := http.StatusBadRequest
 	if len(status) > 0 {
 		statusCode = status[0]
@@ -63,5 +63,5 @@ func (app *Config) errorJSON(writer http.ResponseWriter, err error, status ...in
 	payload.Error = true
 	payload.Message = err.Error()
 
-	return app.writeJSON(writer, statusCode, payload)
+	return WriteJSON(writer, statusCode, payload)
 }
