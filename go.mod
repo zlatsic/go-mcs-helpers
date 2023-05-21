@@ -1,3 +1,3 @@
-module github.com/zlatsic/helpers
+module github.com/zlatsic/go-mcs-helpers
 
 go 1.19
