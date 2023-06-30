@@ -1,4 +1,4 @@
-package helpers
+package go_msc_helpers
 
 import (
 	"encoding/json"
