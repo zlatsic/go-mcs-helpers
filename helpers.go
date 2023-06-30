@@ -12,7 +12,7 @@ const MaxBytes = 1_000_000
 type JsonResponse struct {
 	Error   bool   `json:"error"`
 	Message string `json:"message"`
-	data    any    `json:"data,omitempty"`
+	Data    any    `json:"data,omitempty"`
 }
 
 func ReadJSON(writer http.ResponseWriter, request *http.Request, data any) error {
